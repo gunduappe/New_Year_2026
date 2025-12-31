@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy New Year jununun</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Playfair+Display:ital,wght@0,400;1,600&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Playfair Display', serif;
+            overflow: hidden; /* Prevent manual scrolling until site starts */
+            background: #0a0e27;
+            color: #fff;
+            scroll-behavior: smooth;
+        }
+
+        /* --- PRE-LOADER GIFT BOX --- */
+        #unique-intro {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, #2d1b4e 0%, #0a0e27 100%);
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 1.5s ease;
+        }
+
+        .gift-container {
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .gift-box {
+            font-size: 120px;
+            filter: drop-shadow(0 0 30px #ff69b4);
+            animation: giftPulse 2s infinite ease-in-out;
+        }
+
+        @keyframes giftPulse {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            25% { transform: scale(1.1) rotate(5deg); }
+            75% { transform: scale(1.1) rotate(-5deg); }
+        }
+
+        .video-reveal {
+            display: none;
+            width: 90%;
+            max-width: 800px;
+            text-align: center;
+            animation: fadeIn 1.5s;
+        }
+
+        .video-reveal video {
+            width: 100%;
+            border-radius: 20px;
+            border: 5px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 40px rgba(255, 105, 180, 0.4);
+        }
+
+        /* --- SLIDE SYSTEM --- */
+        .slide-container {
+            height: 100vh;
+            overflow-y: scroll;
+            scroll-snap-type: y mandatory;
+        }
+
+        .slide {
+            min-height: 100vh;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            scroll-snap-align: start;
+            padding: 40px 20px;
+            overflow: hidden;
+        }
+
+        .slide1 { background: linear-gradient(to bottom, #1a0a1a, #2d0a1a); }
+        .slide2 { background: linear-gradient(to bottom, #2d0a1a, #3d0a2a); }
+        .slide3 { background: linear-gradient(to bottom, #3d0a2a, #1a0a1a); }
+        .slide4 { background: linear-gradient(to bottom, #1a0a1a, #2d1b4e); }
+        .slide5 { background: radial-gradient(circle, #4a0e2e 0%, #0a0e27 100%); }
+
+        .petal {
+            position: absolute;
+            background: #ffb6c1;
+            border-radius: 150% 0 150% 0;
+            opacity: 0.3;
+            pointer-events: none;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(-10vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.6; }
+            100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+        }
+
+        .opening-text {
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+            font-style: italic;
+            text-align: center;
+            max-width: 800px;
+            color: #ffd700;
+            text-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
+            min-height: 100px;
+        }
+
+        /* --- PHOTO FIX --- */
+        .main-photo-wrapper {
+            width: clamp(280px, 80vw, 500px);
+            aspect-ratio: 4/5; /* Adjust based on your photo's natural shape */
+            overflow: hidden;
+            border-radius: 20px;
+            border: 8px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 50px rgba(255, 105, 180, 0.3);
+        }
+
+        .main-photo {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s ease;
+        }
+
+        .memory-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 15px;
+            width: 95%;
+            max-width: 1000px;
+            margin-top: 20px;
+        }
+
+        .memory-photo {
+            width: 100%;
+            aspect-ratio: 1;
+            object-fit: cover;
+            border-radius: 12px;
+            border: 2px solid rgba(255, 215, 0, 0.2);
+            transition: transform 0.3s;
+        }
+
+        /* --- LETTER --- */
+        .letter-container {
+            background: rgba(255, 255, 255, 0.07);
+            backdrop-filter: blur(15px);
+            padding: 30px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            max-width: 600px;
+            width: 90%;
+            max-height: 65vh;
+            overflow-y: auto;
+        }
+
+        .letter-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.2rem;
+            color: #ffd700;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .letter-content {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            white-space: pre-wrap;
+        }
+
+        .final-wish {
+            font-family: 'Dancing Script', cursive;
+            font-size: clamp(3rem, 8vw, 5.5rem);
+            background: linear-gradient(45deg, #fff, #ffb6c1, #ffd700);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-buttons {
+            position: fixed;
+            bottom: 30px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            z-index: 100;
+            display: none; /* Hidden until site starts */
+        }
+
+        .nav-btn {
+            background: rgba(255, 105, 180, 0.2);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 10px 25px;
+            border-radius: 30px;
+            color: white;
+            cursor: pointer;
+        }
+
+        .enter-btn, .glow-btn {
+            background: #fff;
+            color: #d63384;
+            padding: 15px 40px;
+            border-radius: 50px;
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 25px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="unique-intro">
+        <div class="gift-container" id="gift-box" onclick="revealVideo()">
+            <div class="gift-box">🎁</div>
+            <p style="color: #ffb6c1; margin-top: 15px; letter-spacing: 2px;">CLICK TO VIEW 2026 First beautiful thing</p>
+        </div>
+
+        <div class="video-reveal" id="video-reveal">
+            <video id="myVideo">
+                <source src="friendship.mp4" type="video/mp4">
+            </video>
+            <br>
+            <button class="enter-btn" onclick="startMainSite()">Enter 2026 with me →</button>
+        </div>
+    </div>
+
+    <div class="slide-container" id="main-content">
+        
+        <div class="slide slide1" id="s1">
+            <div class="opening-text" id="openingText"></div>
+            <button class="glow-btn" id="startBtn" style="visibility: hidden;" onclick="scrollToSlide(1)">Next Chapter ✨</button>
+        </div>
+
+        <div class="slide slide2" id="s2">
+            <div class="main-photo-wrapper">
+                <img src="main.jpeg" alt="Us" class="main-photo">
+            </div>
+            <div style="text-align: center; margin-top: 25px; max-width: 600px; padding: 0 20px;">
+                <p style="font-size: 1.6rem; color: #ffb6c1; font-family: 'Dancing Script';">My Favorite Person,</p>
+                <p style="font-style: italic; opacity: 0.9; margin-top: 10px;">In a year full of moments, every single one spent with you was my favorite. You are the home I always want to come back to my chotuu jununun🫂🫂🫂.</p>
+            </div>
+        </div>
+
+        <div class="slide slide3" id="s3">
+            <h2 style="font-family: 'Dancing Script'; font-size: 2.8rem; color: #ffd700;">Captured Moments</h2>
+            <div class="memory-grid">
+                <img src="1.jpeg" class="memory-photo">
+                <img src="2.jpeg" class="memory-photo">
+                <img src="3.jpeg" class="memory-photo">
+                <img src="4.jpeg" class="memory-photo">
+                <img src="5.jpeg" class="memory-photo">
+                <img src="6.jpeg" class="memory-photo">
+                <img src="7.jpeg" class="memory-photo">
+                <img src="8.jpeg" class="memory-photo">
+                <img src="9.jpeg" class="memory-photo">
+                <img src="10.jpeg" class="memory-photo">
+            </div>
+        </div>
+
+        <div class="slide slide4" id="s4">
+            <div class="letter-container">
+                <h2 class="letter-title">A Letter for You...</h2>
+                <div class="letter-content">
+Dearest My Chotuu jununu,
+
+First of all Happiesstt New Year, I want to tell somethingsss ok naa keluuuu pleachee...Your my bestesttt Friend forever ..even if i go to work or do my masters or anywhere in this world ,i will always be with you , i will always care for you , i will always call you everytime , every minuteee , every second becasue i cant be without your call your bootifullll facee ...i dont need any other friend if i have youu...your always and forver my favourite person and i loveee youu a lott ...myy chotuu junuuuu 🫂🫂🫂🫂..and you need to make many things in this year i am waiting ok naa...matte in this year i need our bond to be more strongg and we shd always make time for eachother .....because i am important to you ashte❤️🤭🫂😁 ..chup chap your liking me and i am only ur favourite no other person should come ..my first and cute warning in 2026 ok naa 🤭🤭🤭.
+And junuuuuuuuu ...i needd youuuuu for this year also ok naa...and even 2027 all years i need you forever ok naaa....
+
+
+
+
+                </div>
+            </div>
+        </div>
+
+        <div class="slide slide5" id="s5">
+            <div class="final-wish">Happy New Year 2026</div>
+            <p style="text-align: center; max-width: 500px; font-size: 1.2rem; opacity: 0.8;">
+                New year jununun..Never wanna losee you..i will always be yours and you will be mine ashte..hihih <br> . 💖
+            </p>
+        </div>
+
+    </div>
+
+    <div class="nav-buttons" id="navGroup">
+        <button class="nav-btn" onclick="scrollToPreviousSlide()">Back</button>
+        <button class="nav-btn" onclick="scrollToNextSlide()">Next</button>
+    </div>
+
+    <script>
+        function createPetals() {
+            const containers = document.querySelectorAll('.slide');
+            containers.forEach(container => {
+                for(let i=0; i<12; i++) {
+                    let petal = document.createElement('div');
+                    petal.className = 'petal';
+                    petal.style.left = Math.random() * 100 + '%';
+                    petal.style.width = Math.random() * 15 + 10 + 'px';
+                    petal.style.height = petal.style.width;
+                    petal.style.animationDuration = Math.random() * 5 + 5 + 's';
+                    petal.style.animationDelay = Math.random() * 5 + 's';
+                    container.appendChild(petal);
+                }
+            });
+        }
+        createPetals();
+
+        function revealVideo() {
+            document.getElementById('gift-box').style.display = 'none';
+            const reveal = document.getElementById('video-reveal');
+            reveal.style.display = 'block';
+            document.getElementById('myVideo').play();
+        }
+
+        function startMainSite() {
+            document.getElementById('myVideo').pause();
+            document.getElementById('unique-intro').style.opacity = '0';
+            setTimeout(() => {
+                document.getElementById('unique-intro').style.display = 'none';
+                document.body.style.overflow = 'auto'; // Enable scrolling
+                document.getElementById('navGroup').style.display = 'flex'; // Show nav
+                typeWriter(); // Start at Slide 1
+            }, 1000);
+        }
+
+        const openingMessage = "Before 2026 begins…\nThere's someone I want to walk into it with and forever.";
+        let charIndex = 0;
+        function typeWriter() {
+            if (charIndex < openingMessage.length) {
+                document.getElementById('openingText').textContent += openingMessage.charAt(charIndex);
+                charIndex++;
+                setTimeout(typeWriter, 100);
+            } else {
+                document.getElementById('startBtn').style.visibility = 'visible';
+            }
+        }
+
+        // --- FIXED SCROLLING ---
+        const slides = document.querySelectorAll('.slide');
+        let currentSlideIndex = 0;
+
+        function scrollToSlide(index) {
+            currentSlideIndex = index;
+            slides[index].scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function scrollToNextSlide() { 
+            if (currentSlideIndex < slides.length - 1) {
+                currentSlideIndex++;
+                scrollToSlide(currentSlideIndex);
+            }
+        }
+
+        function scrollToPreviousSlide() { 
+            if (currentSlideIndex > 0) {
+                currentSlideIndex--;
+                scrollToSlide(currentSlideIndex);
+            }
+        }
+    </script>
+</body>
+</html>
